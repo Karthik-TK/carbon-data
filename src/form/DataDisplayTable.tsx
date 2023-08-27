@@ -51,7 +51,7 @@ const DataDisplayTable: React.FC<DataDisplayProps> = ({ tableData }) => {
         enableColumnFilter: false,
       },
     ],
-    []
+    [],
   );
 
   const [data, setData] = useState<any>([]);
@@ -122,7 +122,7 @@ function Table({
                       <div>
                         {flexRender(
                           header.column.columnDef.header,
-                          header.getContext()
+                          header.getContext(),
                         )}
                         {header.column.getCanFilter() ? (
                           <div>
@@ -149,7 +149,7 @@ function Table({
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </td>
                   );
