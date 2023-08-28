@@ -69,7 +69,7 @@ const FormUI: React.FC = () => {
           if (!compareHeaders(headers, expectedHeaders)) {
             setFile(null);
             setError(
-              "Invalid file format. Headers do not match expected format. For reference use the following column formats: Company Name, Item ID, Quantity, Date of Purchase, Emission Factor"
+              "Invalid file format. Headers do not match expected format. For reference use the following column formats: Company Name, Item ID, Quantity, Date of Purchase, Emission Factor",
             );
             return;
           }
@@ -111,7 +111,7 @@ const FormUI: React.FC = () => {
   const handleEditValue = (
     rowIndex: number,
     fieldName: keyof DataRow,
-    value: string | number
+    value: string | number,
   ) => {
     const updatedData = [...data];
     updatedData[rowIndex] = {
@@ -142,7 +142,7 @@ const FormUI: React.FC = () => {
 
   const compareHeaders = (
     headers: any[],
-    expectedHeaders: string[]
+    expectedHeaders: string[],
   ): boolean => {
     if (headers.length !== expectedHeaders.length) {
       return false;
@@ -295,7 +295,7 @@ const FormUI: React.FC = () => {
                               handleEditValue(
                                 index,
                                 "companyName",
-                                e.target.value
+                                e.target.value,
                               )
                             }
                           />
@@ -317,7 +317,7 @@ const FormUI: React.FC = () => {
                               handleEditValue(
                                 index,
                                 "quantity",
-                                parseInt(e.target.value)
+                                parseInt(e.target.value),
                               )
                             }
                           />
@@ -330,7 +330,7 @@ const FormUI: React.FC = () => {
                               handleEditValue(
                                 index,
                                 "dateOfPurchase",
-                                e.target.value
+                                e.target.value,
                               )
                             }
                           />
@@ -343,7 +343,7 @@ const FormUI: React.FC = () => {
                               handleEditValue(
                                 index,
                                 "emissionFactor",
-                                parseFloat(e.target.value)
+                                parseFloat(e.target.value),
                               )
                             }
                           />
