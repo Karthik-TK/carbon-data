@@ -357,10 +357,12 @@ const FormUI: React.FC = () => {
           )}
         </div>
       ) : (
-        <DataDisplayTable
-          tableData={data}
-          setDisplayTableView={setDisplayTableView}
-        />
+        !isLoading && (
+          <DataDisplayTable
+            tableData={data}
+            setDisplayTableView={setDisplayTableView}
+          />
+        )
       )}
       {isLoading && <LoadScreen />}
       <ToastContainer
