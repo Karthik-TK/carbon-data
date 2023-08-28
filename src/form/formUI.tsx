@@ -22,17 +22,20 @@ interface DataRow {
 const FormUI: React.FC = () => {
   const fileSizeLimit: number = 5;
   const expectedHeaders = [
-    "Company Name",
-    "Item Id",
+    "Purchase ID",
+    "Date",
+    "Item ID",
     "Quantity",
-    "Date of Purchase",
+    "Unit Price",
+    "Total Price",
+    "Supplier Name",
     "Emission Factor",
   ];
 
   const [file, setFile] = useState<File | null>(null);
   const [progress, setProgress] = useState<number>(0);
   const [data, setData] = useState<DataRow[]>([]);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | any | null>(null);
   const [showTableView, setShowTableView] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -69,7 +72,7 @@ const FormUI: React.FC = () => {
           if (!compareHeaders(headers, expectedHeaders)) {
             setFile(null);
             setError(
-              "Invalid file format. Headers do not match expected format. For reference use the following column formats: Company Name, Item ID, Quantity, Date of Purchase, Emission Factor",
+              "Invalid file format. Headers do not match expected format. For reference use the following column formats in sequential order: Purchase ID, Date, Item ID, Quantity, Unit Price, Total Price, Supplier Name, Emission Factor",
             );
             return;
           }
@@ -220,10 +223,10 @@ const FormUI: React.FC = () => {
               ) : (
                 <div className="text-center">
                   <DocumentTextIcon
-                    className="mx-auto h-12 w-12 text-gray-300"
+                    className="mx-auto h-14 w-14 text-gray-400"
                     aria-hidden="true"
                   />
-                  <div className="mt-4 flex text-sm leading-6 text-gray-600">
+                  <div className="mt-4 flex text-sm leading-6 text-gray-600 justify-center">
                     <label
                       htmlFor="file-upload"
                       className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none hover:text-indigo-500"
@@ -238,7 +241,7 @@ const FormUI: React.FC = () => {
                         onChange={handleFileUpload}
                       />
                     </label>
-                    <p className="pl-1">or drag and drop</p>
+                    {/* <p className="pl-1">or drag and drop</p> */}
                   </div>
                   <p className="text-xs leading-5 text-gray-600">
                     .xlsx, .xls, .csv up to 5MB
