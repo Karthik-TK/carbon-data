@@ -6,7 +6,6 @@ import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ComingSoon from "./pages/404";
 import FormUI from "./form/formUI";
-import DataDisplayTable from "./form/DataDisplayTable";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -26,10 +25,6 @@ const router = createBrowserRouter([
   {
     path: "form",
     element: <FormUI />,
-  },
-  {
-    path: "table",
-    element: <DataDisplayTable />,
   },
 ]);
 

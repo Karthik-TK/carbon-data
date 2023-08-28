@@ -52,8 +52,8 @@ const NavBar = () => {
               </svg>
             </button>
             {isMenuOpen && (
-              <div className="absolute top-0 left-0 w-full">
-                <div className="p-5 bg-white border rounded shadow-sm">
+              <div className="absolute top-0 left-0 w-full z-50 shadow-sm">
+                <div className="p-5 bg-white border rounded">
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <button
@@ -74,9 +74,14 @@ const NavBar = () => {
                   <nav>
                     <ul className="space-y-4">
                       <li>
+                        <span className="ml-2 text-xl font-bold tracking-wide text-black uppercase">
+                          CarbonData
+                        </span>
+                      </li>
+                      <li>
                         <a
                           href="/signup"
-                          className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
+                          className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-700 hover:bg-gray-400"
                           aria-label="Sign up"
                           title="Sign up"
                         >
