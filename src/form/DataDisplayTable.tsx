@@ -1,4 +1,11 @@
-import React, { useEffect, useMemo, useReducer, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from "react";
 import {
   Column,
   Table as ReactTable,
@@ -8,7 +15,9 @@ import {
   getPaginationRowModel,
   ColumnDef,
   flexRender,
+  SortingState,
 } from "@tanstack/react-table";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 export type CarbonData = {
   companyName: string;
@@ -20,9 +29,13 @@ export type CarbonData = {
 
 interface DataDisplayProps {
   tableData?: any[];
+  setDisplayTableView?: Dispatch<SetStateAction<any>>;
 }
 
-const DataDisplayTable: React.FC<DataDisplayProps> = ({ tableData }) => {
+const DataDisplayTable: React.FC<DataDisplayProps> = ({
+  tableData,
+  setDisplayTableView,
+}) => {
   const rerender = useReducer(() => ({}), {})[1];
 
   const columns = useMemo<ColumnDef<CarbonData>[]>(
@@ -51,7 +64,7 @@ const DataDisplayTable: React.FC<DataDisplayProps> = ({ tableData }) => {
         enableColumnFilter: false,
       },
     ],
-    [],
+    []
   );
 
   const [data, setData] = useState<any>([]);
@@ -63,7 +76,19 @@ const DataDisplayTable: React.FC<DataDisplayProps> = ({ tableData }) => {
 
   return (
     <>
-      <div className="flex m-4 p-4 border border-slate-400 rounded-xl bg-gray-100 shadow-lg">
+      <div className="grid grid-flow-row auto-rows-max m-4 p-4 border border-slate-400 rounded-xl bg-gray-100 shadow-lg">
+        <div>
+          <h1 className="text-2xl font-bold mb-8">File Data Table</h1>
+          <div className="relative">
+            <button
+              className="absolute bottom-6 right-0 bg-slate-300 rounded-xl text-black text-md inline-flex p-2 gap-2 hover:bg-slate-500 hover:text-white"
+              onClick={setDisplayTableView}
+            >
+              <ArrowLeftIcon className="w-5 h-5 pt-1" />
+              Go back
+            </button>
+          </div>
+        </div>
         <Table
           {...{
             data,
@@ -93,10 +118,16 @@ function Table({
   data: CarbonData[];
   columns: ColumnDef<CarbonData>[];
 }) {
+  const [sorting, setSorting] = useState<SortingState>([]);
+
   const table = useReactTable({
     data,
     columns,
+    state: {
+      sorting,
+    },
     // Pipeline
+    onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -107,7 +138,7 @@ function Table({
   return (
     <div className="p-2">
       <div className="h-2" />
-      <table className="table-auto border-collapse border border-gray-800 w-full bg-white rounded-md">
+      <table className="table-auto border-collapse border border-gray-800 w-full bg-white rounded-xl">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
@@ -122,7 +153,7 @@ function Table({
                       <div>
                         {flexRender(
                           header.column.columnDef.header,
-                          header.getContext(),
+                          header.getContext()
                         )}
                         {header.column.getCanFilter() ? (
                           <div>
@@ -149,7 +180,7 @@ function Table({
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext(),
+                        cell.getContext()
                       )}
                     </td>
                   );
@@ -162,28 +193,40 @@ function Table({
       <div className="h-2" />
       <div className="flex justify-center gap-2 mt-2">
         <button
-          className="bg-gray-400 text-black border rounded-md p-1"
+          className={`${
+            !table.getCanPreviousPage()
+              ? "cursor-not-allowed"
+              : "cursor-pointer"
+          } + bg-gray-400 text-black border rounded-md p-1 w-8`}
           onClick={() => table.setPageIndex(0)}
           disabled={!table.getCanPreviousPage()}
         >
           {"<<"}
         </button>
         <button
-          className="bg-gray-400 text-black border rounded-md p-1"
+          className={`${
+            !table.getCanPreviousPage()
+              ? "cursor-not-allowed"
+              : "cursor-pointer"
+          } + bg-gray-400 text-black border rounded-md p-1 w-8`}
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
           {"<"}
         </button>
         <button
-          className="bg-gray-400 text-black border rounded-md p-1"
+          className={`${
+            !table.getCanNextPage() ? "cursor-not-allowed" : "cursor-pointer"
+          } + bg-gray-400 text-black border rounded-md p-1 w-8`}
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
           {">"}
         </button>
         <button
-          className="bg-gray-400 text-black border rounded-md p-1"
+          className={`${
+            !table.getCanNextPage() ? "cursor-not-allowed" : "cursor-pointer"
+          } + bg-gray-400 text-black border rounded-md p-1 w-8`}
           onClick={() => table.setPageIndex(table.getPageCount() - 1)}
           disabled={!table.getCanNextPage()}
         >
@@ -206,7 +249,7 @@ function Table({
               const page = e.target.value ? Number(e.target.value) - 1 : 0;
               table.setPageIndex(page);
             }}
-            className="border p-1 rounded w-16"
+            className="border p-1 rounded w-16 bg-white text-gray-900 placeholder:text-gray-400 focus:ring-0"
           />
         </span>
         <select
@@ -214,6 +257,7 @@ function Table({
           onChange={(e) => {
             table.setPageSize(Number(e.target.value));
           }}
+          className="border p-1 rounded w-fit bg-white text-gray-900 placeholder:text-gray-400 focus:ring-0"
         >
           {[10, 20].map((pageSize) => (
             <option key={pageSize} value={pageSize}>
@@ -222,8 +266,8 @@ function Table({
           ))}
         </select>
       </div>
-      <div>{table.getRowModel().rows.length} Rows</div>
-      <pre>{JSON.stringify(table.getState().pagination, null, 2)}</pre>
+      {/* <div>{table.getRowModel().rows.length} Rows</div>
+      <pre>{JSON.stringify(table.getState().pagination, null, 2)}</pre> */}
     </div>
   );
 }
@@ -253,7 +297,7 @@ function Filter({
           ])
         }
         placeholder={`Min`}
-        className="w-24 border shadow rounded"
+        className="w-24 border shadow rounded p-1 bg-white text-gray-900 placeholder:text-gray-400 focus:ring-0"
       />
       <input
         type="number"
@@ -265,7 +309,7 @@ function Filter({
           ])
         }
         placeholder={`Max`}
-        className="w-24 border shadow rounded"
+        className="w-24 border shadow rounded p-1 bg-white text-gray-900 placeholder:text-gray-400 focus:ring-0"
       />
     </div>
   ) : (
@@ -274,7 +318,7 @@ function Filter({
       value={(columnFilterValue ?? "") as string}
       onChange={(e) => column.setFilterValue(e.target.value)}
       placeholder={`Search...`}
-      className="w-36 border shadow rounded"
+      className="w-36 border shadow rounded p-1 bg-white text-gray-900 placeholder:text-gray-400 focus:ring-0"
     />
   );
 }
