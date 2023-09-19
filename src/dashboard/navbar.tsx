@@ -20,6 +20,16 @@ const NavBar = () => {
           <ul className="items-center hidden space-x-8 lg:flex">
             <li>
               <a
+                href="/fileParser"
+                className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
+                aria-label="File Parser"
+                title="File Parser"
+              >
+                File Parser
+              </a>
+            </li>
+            <li>
+              <a
                 href="/signup"
                 className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
                 aria-label="Sign up"
@@ -77,6 +87,16 @@ const NavBar = () => {
                         <span className="ml-2 text-xl font-bold tracking-wide text-black uppercase">
                           CarbonData
                         </span>
+                      </li>
+                      <li>
+                        <a
+                          href="/fileParser"
+                          className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-700 hover:bg-gray-400"
+                          aria-label="File up"
+                          title="File up"
+                        >
+                          File Parser
+                        </a>
                       </li>
                       <li>
                         <a
