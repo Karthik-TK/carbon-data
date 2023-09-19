@@ -6,9 +6,10 @@ import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ComingSoon from "./pages/404";
 import FormUI from "./form/formUI";
+import FileParser from "./pages/fileParser";
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement,
+  document.getElementById("root") as HTMLElement
 );
 
 const router = createBrowserRouter([
@@ -26,12 +27,16 @@ const router = createBrowserRouter([
     path: "form",
     element: <FormUI />,
   },
+  {
+    path: "fileParser",
+    element: <FileParser />,
+  },
 ]);
 
 root.render(
   <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>,
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
